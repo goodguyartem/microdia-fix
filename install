@@ -1,0 +1,33 @@
+#!/bin/bash
+# Installs the Microdia Fix Daemon as a systemd service.
+# Run as root: sudo ./install
+
+# Exit on any error.
+set -e
+
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)" # Current dir.
+source install-vars
+
+if [[ $EUID -ne 0 ]]; then
+    echo "Installation requires root privileges. Try again with: sudo ./install" >&2
+    exit 1
+fi
+
+if [[ ! -f "$DIR/$TARGET" ]]; then
+    echo "$TARGET not found in $DIR -- Aborting."
+    exit 1
+fi
+
+echo "Installing $TARGET to $DST ..."
+install -m 755 "$DIR/$TARGET" $INSTALL_PATH
+
+echo "Installing systemd service ..."
+install -m 644 "$DIR/$SERVICE" $SERVICE_PATH
+
+echo "Reloading systemd and enabling the service ..."
+systemctl daemon-reload
+systemctl enable --now $SERVICE
+
+echo -e "\nInstallation successful. You can check the status with:"
+echo "  systemctl status $SERVICE"
+echo "  journalctl -u $SERVICE -f"

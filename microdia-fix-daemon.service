@@ -1,0 +1,18 @@
+[Unit]
+Description=Fix for Microdia 2.4G USB Dongles stalling
+# Start reasonably late so USB devices have had a chance to enumerate. 
+# The daemon's rescan loop will pick the dongle up even if it's not present yet at start, so this doesn't need to be exact.
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/microdia-fix-daemon.py
+Restart=always
+RestartSec=2
+
+# hidraw device nodes are root-only by default, so this needs to run as root unless you 
+# set up a udev rule granting a specific group access.
+User=root
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+TARGET="microdia-fix-daemon.py"               # File to install.
+DST="/usr/local/bin"                          # Default install location (for manual installs).
+INSTALL_PATH="${DST}/${TARGET}"               # Full target install filepath.
+
+SERVICE="microdia-fix-daemon.service"         # Service filename.
+SERVICE_PATH="/etc/systemd/system/${SERVICE}" # Default service install filepath (for manual installs).

@@ -1,0 +1,39 @@
+#!/bin/bash
+# Uninstall the Microdia Fix Daemon systemd service.
+# Run as root: sudo ./uninstall
+
+# Exit on any error.
+set -e
+
+source install-vars
+
+if [[ $EUID -ne 0 ]]; then
+    echo "Uninstallation requires root privileges. Try again with: sudo ./uninstall" >&2
+    exit 1
+fi
+
+if systemctl list-unit-files | grep -q "^$SERVICE"; then
+    echo "Stopping and disabling $SERVICE ..."
+    systemctl disable --now $SERVICE 2>/dev/null || true
+else
+    echo "$SERVICE not found in systemd, skipping stop and disable."
+fi
+
+if [[ -f $SERVICE_PATH ]]; then
+    echo "Removing $SERVICE_PATH ..."
+    rm -f $SERVICE_PATH
+    systemctl daemon-reload
+    systemctl reset-failed 2>/dev/null || true
+else
+    echo "$SERVICE_PATH not present, skipping."
+fi
+
+
+if [[ -f $INSTALL_PATH ]]; then
+    echo "Removing $INSTALL_PATH ..."
+    rm -f $INSTALL_PATH
+else
+    echo "$INSTALL_PATH not present, skipping."
+fi
+
+echo -e "\nUninstall successful."
