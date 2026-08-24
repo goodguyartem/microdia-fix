@@ -4,13 +4,13 @@
 Microdia Fix for Linux
 https://www.github.com/goodguyartem/microdia-fix
 
-Microdia 2.4G USB dongles, especially those found with Ajazz AK820 pro keyboards, have been known to randomly stall on Linux
-while working fine on Windows. Based on captured USB data from both Windows and Linux, it seems like Windows opens every 
-interface a composite HID device exposes, while Linux only submits interrupt IN URBs on interfaces that were already 
-opened by something. This results in the RF link silently dropping at random intervals.
+Microdia 2.4G USB dongles, especially those found with Ajazz AK820 pro keyboards, have been known to randomly stall on 
+Linux while working fine on Windows. Based on captured USB data from both Windows and Linux, it seems like Windows 
+opens every interface a composite HID device exposes, while Linux only submits interrupt IN URBs on interfaces that 
+were already opened by something. This results in the RF link silently dropping at random intervals.
 
-This script simply detects, opens, and reads from the device's vendor-specific HID interfaces so interrupt IN URBs keep 
-being submitted. Run it in the background as a systemd service or from your terminal:
+This script simply detects, opens, and reads from the device's vendor-specific HID interfaces so interrupt IN URBs
+keep being submitted. Run it in the background as a systemd service or from your terminal:
 
     sudo python3 microdia-fix-daemon.py
 
@@ -21,28 +21,6 @@ This should also fix other keyboards with the same issue. To target custom vendo
 For complete usage instructions, run:
 
     python3 microdia-fix-daemon.py --help
-
-MIT License
-
-Copyright (c) 2026 Artem K.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
 """
 
 import os
@@ -167,8 +145,8 @@ def main():
         "-i", 
         "--interfaces", 
         default=None,
-        help='Comma-separated interface numbers to restrict to (e.g. "3,4"). '
-        'Default: auto-detect all multi-endpoint interfaces.'
+        help='Comma-separated interface numbers to restrict to when auto-detecting (e.g. "3,4"). '
+        'Has no effect if explicit paths are provided. Default: auto-detect all multi-endpoint interfaces.'
     )
     parser.add_argument(
         "-m", 
