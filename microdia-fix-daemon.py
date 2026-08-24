@@ -10,10 +10,39 @@ interface a composite HID device exposes, while Linux only submits interrupt IN 
 opened by something. This results in the RF link silently dropping at random intervals.
 
 This script simply detects, opens, and reads from the device's vendor-specific HID interfaces so interrupt IN URBs keep 
-being submitted. Run it in the background from your terminal with sudo or as a systemd service. This should also fix
-other keyboards with the same issue; run microdia-fix-daemon.py --help for usage instructions.
+being submitted. Run it in the background as a systemd service or from your terminal:
 
-Written by goodguyartem <3 <https://www.github.com/goodguyartem>
+    sudo python3 microdia-fix-daemon.py
+
+This should also fix other keyboards with the same issue. To target custom vendor:device hex IDs, run: 
+
+    sudo python3 microdia-fix-daemon.py -v VENDOR -d DEVICE
+
+For complete usage instructions, run:
+
+    python3 microdia-fix-daemon.py --help
+
+MIT License
+
+Copyright (c) 2026 Artem K.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 """
 
 import os
