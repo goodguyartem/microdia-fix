@@ -10,7 +10,7 @@ Clone the repo into the directory of your choosing and navigate to it with:
 
 ```
 git clone https://github.com/goodguyartem/microdia-fix.git
-cd microdia-fix.git
+cd microdia-fix
 ```
 
 If you just want to test the fix out before installing, you can run the script with:
